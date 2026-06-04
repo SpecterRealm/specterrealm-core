@@ -21,7 +21,7 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: wrapper
+          gradle-version: '8.8'
 
       - name: Build
         run: gradle build -Pmod_version=${GITHUB_REF_NAME#v}
