@@ -1,0 +1,16 @@
+{
+  "item.specterrealm.icon_quest_gathering": "Quest Icon: Gathering",
+  "item.specterrealm.icon_quest_combat": "Quest Icon: Combat",
+  "item.specterrealm.icon_quest_exploration": "Quest Icon: Exploration",
+  "item.specterrealm.icon_quest_crafting": "Quest Icon: Crafting",
+  "item.specterrealm.icon_quest_tech": "Quest Icon: Tech",
+  "item.specterrealm.icon_quest_magic": "Quest Icon: The Veil",
+  "item.specterrealm.icon_quest_boss": "Quest Icon: Boss",
+  "item.specterrealm.icon_quest_secret": "Quest Icon: Restricted",
+  "item.specterrealm.icon_quest_complete": "Quest Icon: Complete",
+  "item.specterrealm.icon_chapter_survive": "Chapter Icon: Survive",
+  "item.specterrealm.icon_chapter_establish": "Chapter Icon: Establish",
+  "item.specterrealm.icon_chapter_automate": "Chapter Icon: Automate",
+  "item.specterrealm.icon_chapter_scale": "Chapter Icon: Scale",
+  "item.specterrealm.icon_chapter_command": "Chapter Icon: Command"
+}

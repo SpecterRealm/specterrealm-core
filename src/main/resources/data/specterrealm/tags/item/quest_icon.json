@@ -1,0 +1,18 @@
+{
+  "values": [
+    "specterrealm:icon_quest_gathering",
+    "specterrealm:icon_quest_combat",
+    "specterrealm:icon_quest_exploration",
+    "specterrealm:icon_quest_crafting",
+    "specterrealm:icon_quest_tech",
+    "specterrealm:icon_quest_magic",
+    "specterrealm:icon_quest_boss",
+    "specterrealm:icon_quest_secret",
+    "specterrealm:icon_quest_complete",
+    "specterrealm:icon_chapter_survive",
+    "specterrealm:icon_chapter_establish",
+    "specterrealm:icon_chapter_automate",
+    "specterrealm:icon_chapter_scale",
+    "specterrealm:icon_chapter_command"
+  ]
+}
