@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "specterrealm:copper_capacitor",
+    "specterrealm:copper_coil",
+    "specterrealm:copper_switch",
+    "specterrealm:copper_wire_fine",
+    "specterrealm:copper_wire_heavy",
+    "specterrealm:em_coil",
+    "specterrealm:gold_battery_cell_adv",
+    "specterrealm:gold_capacitor",
+    "specterrealm:gold_coil",
+    "specterrealm:gold_switch",
+    "specterrealm:gold_wire_fine",
+    "specterrealm:gold_wire_heavy",
+    "specterrealm:iron_transformer_core",
+    "specterrealm:lead_battery_cell",
+    "specterrealm:led",
+    "specterrealm:light_bulb",
+    "specterrealm:osmium_battery_cell_adv",
+    "specterrealm:osmium_coil",
+    "specterrealm:osmium_wire_fine",
+    "specterrealm:osmium_wire_heavy",
+    "specterrealm:silver_coil",
+    "specterrealm:silver_wire_fine",
+    "specterrealm:silver_wire_heavy",
+    "specterrealm:steel_switch",
+    "specterrealm:steel_transformer_core",
+    "specterrealm:tin_battery_cell"
+  ]
+}

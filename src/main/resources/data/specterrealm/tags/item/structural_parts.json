@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "specterrealm:aluminum_bracket",
+    "specterrealm:aluminum_casing",
+    "specterrealm:aluminum_duct",
+    "specterrealm:aluminum_filter_element",
+    "specterrealm:aluminum_frame",
+    "specterrealm:brass_bracket",
+    "specterrealm:brass_casing",
+    "specterrealm:brass_duct",
+    "specterrealm:brass_filter_element",
+    "specterrealm:brass_frame",
+    "specterrealm:iron_bracket",
+    "specterrealm:iron_casing",
+    "specterrealm:iron_duct",
+    "specterrealm:iron_filter_element",
+    "specterrealm:iron_frame",
+    "specterrealm:obsidian_bracket",
+    "specterrealm:obsidian_casing",
+    "specterrealm:obsidian_duct",
+    "specterrealm:obsidian_filter_element",
+    "specterrealm:obsidian_frame",
+    "specterrealm:steel_bracket",
+    "specterrealm:steel_casing",
+    "specterrealm:steel_duct",
+    "specterrealm:steel_filter_element",
+    "specterrealm:steel_frame"
+  ]
+}

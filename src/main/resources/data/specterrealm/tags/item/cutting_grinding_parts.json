@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "specterrealm:diamond_cutting_blade",
+    "specterrealm:diamond_drill_bit",
+    "specterrealm:diamond_grinding_wheel",
+    "specterrealm:diamond_saw_blade",
+    "specterrealm:iron_cutting_blade",
+    "specterrealm:iron_drill_bit",
+    "specterrealm:iron_saw_blade",
+    "specterrealm:steel_cutting_blade",
+    "specterrealm:steel_drill_bit",
+    "specterrealm:steel_saw_blade",
+    "specterrealm:stone_grinding_wheel"
+  ]
+}

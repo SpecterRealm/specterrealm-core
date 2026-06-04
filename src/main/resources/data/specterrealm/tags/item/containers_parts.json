@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "specterrealm:aluminum_canister",
+    "specterrealm:aluminum_cylinder",
+    "specterrealm:aluminum_tank_fitting",
+    "specterrealm:brass_canister",
+    "specterrealm:brass_cylinder",
+    "specterrealm:brass_tank_fitting",
+    "specterrealm:copper_canister",
+    "specterrealm:copper_cylinder",
+    "specterrealm:copper_tank_fitting",
+    "specterrealm:iron_canister",
+    "specterrealm:iron_cylinder",
+    "specterrealm:iron_tank_fitting",
+    "specterrealm:lead_canister",
+    "specterrealm:lead_cylinder",
+    "specterrealm:lead_tank_fitting",
+    "specterrealm:steel_canister",
+    "specterrealm:steel_cylinder",
+    "specterrealm:steel_tank_fitting",
+    "specterrealm:tin_canister",
+    "specterrealm:tin_cylinder",
+    "specterrealm:tin_tank_fitting"
+  ]
+}

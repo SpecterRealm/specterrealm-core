@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "specterrealm:circuit_advanced",
+    "specterrealm:circuit_basic",
+    "specterrealm:circuit_elite",
+    "specterrealm:gpu_advanced",
+    "specterrealm:gpu_basic",
+    "specterrealm:logic_gate",
+    "specterrealm:memory_module",
+    "specterrealm:processor",
+    "specterrealm:resin_board",
+    "specterrealm:signal_antenna"
+  ]
+}

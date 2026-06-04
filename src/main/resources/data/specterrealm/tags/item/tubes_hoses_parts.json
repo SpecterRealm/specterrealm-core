@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "specterrealm:aluminum_metal_tube",
+    "specterrealm:brass_metal_tube",
+    "specterrealm:copper_hose_clamp",
+    "specterrealm:copper_metal_tube",
+    "specterrealm:iron_hose_clamp",
+    "specterrealm:iron_metal_tube",
+    "specterrealm:lead_metal_tube",
+    "specterrealm:rubber_hose",
+    "specterrealm:steel_hose_clamp",
+    "specterrealm:steel_metal_tube",
+    "specterrealm:tin_metal_tube"
+  ]
+}

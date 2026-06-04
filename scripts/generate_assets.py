@@ -221,20 +221,27 @@ def main():
         c_tags.setdefault("ingots", {}).setdefault(mat, []).append(f"specterrealm:{name}")
 
     # ── Crafting parts ────────────────────────────────────────────────────────
-    for (part_id, _cat, mat_prefix, mats) in PARTS:
+    # per-category tag buckets for EMI group filtering
+    category_tags = {}  # {category_id: [item_id, ...]}
+
+    for (part_id, cat_id, mat_prefix, mats) in PARTS:
         if mat_prefix:
             for mat in sorted(mats):
                 name = f"{mat}_{part_id}"
-                all_part_ids.append(f"specterrealm:{name}")
+                item_id = f"specterrealm:{name}"
+                all_part_ids.append(item_id)
+                category_tags.setdefault(cat_id, []).append(item_id)
                 lang[f"item.specterrealm.{name}"] = display_name(name)
                 write_json(MODELS_DIR / f"{name}.json", model_json(name))
                 # c: convention tag if mapped
                 c_cat = C_TAG_MAP.get(part_id)
                 if c_cat:
-                    c_tags.setdefault(c_cat, {}).setdefault(mat, []).append(f"specterrealm:{name}")
+                    c_tags.setdefault(c_cat, {}).setdefault(mat, []).append(item_id)
         else:
             name = part_id
-            all_part_ids.append(f"specterrealm:{name}")
+            item_id = f"specterrealm:{name}"
+            all_part_ids.append(item_id)
+            category_tags.setdefault(cat_id, []).append(item_id)
             lang[f"item.specterrealm.{name}"] = display_name(name)
             write_json(MODELS_DIR / f"{name}.json", model_json(name))
 
@@ -244,6 +251,10 @@ def main():
     # ── Write specterrealm grouping tags ─────────────────────────────────────
     write_json(TAGS_SR / "crafting_parts.json", tag_json(*all_part_ids))
     write_json(TAGS_SR / "base_ingots.json",    tag_json(*all_ingot_ids))
+
+    # Per-category tags — enables EMI search like @specterrealm:mechanical_parts
+    for cat_id, items in category_tags.items():
+        write_json(TAGS_SR / f"{cat_id}_parts.json", tag_json(*items))
 
     # ── Write c: convention tags ──────────────────────────────────────────────
     for cat, mat_map in c_tags.items():
@@ -256,6 +267,7 @@ def main():
     print(f"  {len(all_ingot_ids)} base ingot models + lang entries")
     print(f"  {len(all_part_ids)} part models + lang entries")
     print(f"  {total} items total")
+    print(f"  {len(category_tags)} per-category specterrealm: tags")
     print(f"  {sum(len(v) for v in c_tags.values())} c: convention tag files")
     print(f"  lang file: {LANG_FILE}")
     print("Done.")
