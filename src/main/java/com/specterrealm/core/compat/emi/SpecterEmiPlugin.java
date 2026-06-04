@@ -33,13 +33,13 @@ public class SpecterEmiPlugin implements EmiPlugin {
                 for (SpecterMaterial mat : part.materials) {
                     if (!part.isEnabled(mat)) {
                         DeferredItem<?> di = parts.get(part.itemId(mat));
-                        if (di != null) registry.removeEmi(EmiStack.of(di.get()));
+                        if (di != null) registry.removeEmiStacks(EmiStack.of(di.get()));
                     }
                 }
             } else {
                 if (!part.isEnabled()) {
                     DeferredItem<?> di = parts.get(part.itemId());
-                    if (di != null) registry.removeEmi(EmiStack.of(di.get()));
+                    if (di != null) registry.removeEmiStacks(EmiStack.of(di.get()));
                 }
             }
         }
@@ -51,14 +51,14 @@ public class SpecterEmiPlugin implements EmiPlugin {
         // Material name is derived from "{material}_ingot" key.
         if (!com.specterrealm.core.config.SpecterRealmConfig.CATEGORY_BASE_MATERIALS.get()) {
             ItemInit.getBaseIngots().values().forEach(di ->
-                registry.removeEmi(EmiStack.of(di.get())));
+                registry.removeEmiStacks(EmiStack.of(di.get())));
             return;
         }
         for (var entry : ItemInit.getBaseIngots().entrySet()) {
             String mat = entry.getKey().replace("_ingot", "");
             SpecterMaterial sm = materialById(mat);
             if (sm != null && !sm.isEnabled()) {
-                registry.removeEmi(EmiStack.of(entry.getValue().get()));
+                registry.removeEmiStacks(EmiStack.of(entry.getValue().get()));
             }
         }
     }

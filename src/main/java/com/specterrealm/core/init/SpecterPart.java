@@ -65,7 +65,7 @@ public enum SpecterPart {
     // rubber_hose has no material prefix — it is always rubber, named "rubber_hose"
     RUBBER_HOSE    ("rubber_hose",    TUBES_HOSES,           false, Set.of(SpecterMaterial.RUBBER)),
     METAL_TUBE     ("metal_tube",     TUBES_HOSES,           true,  VESSEL_METALS),
-    HOSE_CLAMP     ("hose_clamp",     TUBES_HOSES,           true,  HOSE_CLAMP),
+    HOSE_CLAMP     ("hose_clamp",     TUBES_HOSES,           true,  MaterialSets.HOSE_CLAMP),
 
     // ── Electrical ────────────────────────────────────────────────────────────
     WIRE_FINE      ("wire_fine",      ELECTRICAL,            true,  CONDUCTIVE),
@@ -73,7 +73,7 @@ public enum SpecterPart {
     COIL           ("coil",           ELECTRICAL,            true,  CONDUCTIVE),
     EM_COIL        ("em_coil",        ELECTRICAL,            false, NONE),
     TRANSFORMER_CORE ("transformer_core", ELECTRICAL,        true,  TRANSFORMER),
-    CAPACITOR      ("capacitor",      ELECTRICAL,            true,  CAPACITOR),
+    CAPACITOR      ("capacitor",      ELECTRICAL,            true,  MaterialSets.CAPACITOR),
     BATTERY_CELL   ("battery_cell",   ELECTRICAL,            true,  BATTERY_BASIC),
     BATTERY_CELL_ADV ("battery_cell_adv", ELECTRICAL,        true,  BATTERY_ADV),
     LED            ("led",            ELECTRICAL,            false, NONE),
@@ -93,11 +93,11 @@ public enum SpecterPart {
     SIGNAL_ANTENNA ("signal_antenna", COMPUTING,             false, NONE),
 
     // ── Structural ────────────────────────────────────────────────────────────
-    FRAME          ("frame",          STRUCTURAL,            true,  STRUCTURAL),
-    CASING         ("casing",         STRUCTURAL,            true,  STRUCTURAL),
-    BRACKET        ("bracket",        STRUCTURAL,            true,  STRUCTURAL),
-    DUCT           ("duct",           STRUCTURAL,            true,  STRUCTURAL),
-    FILTER_ELEMENT ("filter_element", STRUCTURAL,            true,  STRUCTURAL),
+    FRAME          ("frame",          SpecterCategory.STRUCTURAL, true,  MaterialSets.STRUCTURAL),
+    CASING         ("casing",         SpecterCategory.STRUCTURAL, true,  MaterialSets.STRUCTURAL),
+    BRACKET        ("bracket",        SpecterCategory.STRUCTURAL, true,  MaterialSets.STRUCTURAL),
+    DUCT           ("duct",           SpecterCategory.STRUCTURAL, true,  MaterialSets.STRUCTURAL),
+    FILTER_ELEMENT ("filter_element", SpecterCategory.STRUCTURAL, true,  MaterialSets.STRUCTURAL),
 
     // ── Machine Intermediates ─────────────────────────────────────────────────
     GEAR_BLANK     ("gear_blank",     MACHINE_INTERMEDIATES, true,  BLANK_METALS),
