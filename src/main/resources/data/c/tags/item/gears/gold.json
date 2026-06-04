@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "specterrealm:gold_bevel_gear",
+    "specterrealm:gold_ring_gear",
+    "specterrealm:gold_spur_gear",
+    "specterrealm:gold_worm_gear"
+  ]
+}

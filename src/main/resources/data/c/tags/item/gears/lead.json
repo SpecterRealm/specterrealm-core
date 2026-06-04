@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "specterrealm:lead_bevel_gear",
+    "specterrealm:lead_ring_gear",
+    "specterrealm:lead_spur_gear",
+    "specterrealm:lead_worm_gear"
+  ]
+}

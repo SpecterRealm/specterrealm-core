@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "specterrealm:brass_bevel_gear",
+    "specterrealm:brass_rack",
+    "specterrealm:brass_ring_gear",
+    "specterrealm:brass_spur_gear",
+    "specterrealm:brass_worm_gear"
+  ]
+}

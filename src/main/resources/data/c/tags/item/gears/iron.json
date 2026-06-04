@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "specterrealm:iron_bevel_gear",
+    "specterrealm:iron_rack",
+    "specterrealm:iron_ring_gear",
+    "specterrealm:iron_spur_gear",
+    "specterrealm:iron_worm_gear"
+  ]
+}

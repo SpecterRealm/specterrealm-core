@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "specterrealm:diamond_bevel_gear",
+    "specterrealm:diamond_rack",
+    "specterrealm:diamond_ring_gear",
+    "specterrealm:diamond_spur_gear",
+    "specterrealm:diamond_worm_gear"
+  ]
+}
