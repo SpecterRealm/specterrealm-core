@@ -18,6 +18,7 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v3
         with:
+          gradle-version: wrapper
           cache-read-only: ${{ github.event_name == 'pull_request' }}
 
       - name: Build
