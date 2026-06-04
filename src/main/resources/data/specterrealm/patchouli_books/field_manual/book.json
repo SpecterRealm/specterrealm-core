@@ -1,0 +1,18 @@
+{
+  "name": "Field Manual",
+  "landing_text": "Operational notes recovered from previous simulation runs.$(br2)Read it. Keep it. The simulation does not repeat itself.",
+  "cover_color": "2C4A2E",
+  "text_color": "26302A",
+  "header_color": "2C4A2E",
+  "nameplate_color": "D8DFD0",
+  "link_color": "2E7D32",
+  "link_hover_color": "4CAF50",
+  "use_blocky_font": false,
+  "show_progress": false,
+  "version": "1",
+  "model": "specterrealm:field_manual",
+  "book_texture": "specterrealm:textures/gui/book_texture.png",
+  "filler_texture": "specterrealm:textures/gui/filler_texture.png",
+  "crafting_texture": "specterrealm:textures/gui/crafting_texture.png",
+  "use_resource_pack": true
+}
