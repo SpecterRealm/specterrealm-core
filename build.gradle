@@ -24,7 +24,7 @@ runs {
 }
 
 repositories {
-    maven { url "https://maven.emi.dev" }
+    maven { url "https://maven.terraformersmc.com/" }
 }
 
 dependencies {
