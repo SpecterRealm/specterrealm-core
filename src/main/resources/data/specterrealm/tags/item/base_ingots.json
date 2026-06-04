@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "specterrealm:aluminum_ingot",
+    "specterrealm:bronze_ingot",
+    "specterrealm:lead_ingot",
+    "specterrealm:silver_ingot",
+    "specterrealm:tin_ingot"
+  ]
+}

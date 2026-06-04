@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "specterrealm:aluminum_bevel_gear",
+    "specterrealm:aluminum_rack",
+    "specterrealm:aluminum_ring_gear",
+    "specterrealm:aluminum_spur_gear",
+    "specterrealm:aluminum_worm_gear"
+  ]
+}

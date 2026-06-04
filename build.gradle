@@ -23,8 +23,14 @@ runs {
     server { }
 }
 
+repositories {
+    maven { url "https://maven.terraformersmc.com/" }
+}
+
 dependencies {
     implementation "net.neoforged:neoforge:${neoforge_version}"
+    // EMI recipe viewer — optional at runtime, required at compile time for plugin API
+    compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
 }
 
 tasks.register('validateResources') {

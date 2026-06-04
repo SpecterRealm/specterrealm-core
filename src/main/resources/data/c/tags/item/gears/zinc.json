@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "specterrealm:zinc_bevel_gear",
+    "specterrealm:zinc_ring_gear",
+    "specterrealm:zinc_spur_gear",
+    "specterrealm:zinc_worm_gear"
+  ]
+}

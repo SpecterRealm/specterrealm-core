@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "specterrealm:netherite_bevel_gear",
+    "specterrealm:netherite_rack",
+    "specterrealm:netherite_ring_gear",
+    "specterrealm:netherite_spur_gear",
+    "specterrealm:netherite_worm_gear"
+  ]
+}
