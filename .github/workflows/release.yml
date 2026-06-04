@@ -24,7 +24,7 @@ jobs:
           gradle-version: wrapper
 
       - name: Build
-        run: ./gradlew build -Pmod_version=${GITHUB_REF_NAME#v}
+        run: gradle build -Pmod_version=${GITHUB_REF_NAME#v}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
