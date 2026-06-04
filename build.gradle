@@ -27,6 +27,29 @@ dependencies {
     implementation "net.neoforged:neoforge:${neoforge_version}"
 }
 
+tasks.register('validateResources') {
+    group = 'verification'
+    description = 'Validates all JSON resource files are well-formed'
+    inputs.dir('src/main/resources')
+    doLast {
+        def failures = []
+        fileTree('src/main/resources').include('**/*.json').each { File f ->
+            try {
+                new groovy.json.JsonSlurper().parse(f)
+            } catch (Exception e) {
+                failures << "${projectDir.toPath().relativize(f.toPath())}: ${e.message}"
+            }
+        }
+        if (failures) {
+            throw new GradleException("Invalid JSON in resource files:\n  ${failures.join('\n  ')}")
+        }
+    }
+}
+
+tasks.named('check').configure {
+    dependsOn('validateResources')
+}
+
 tasks.withType(ProcessResources).configureEach {
     var replaceProperties = [
         minecraft_version: minecraft_version,
