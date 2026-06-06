@@ -1,0 +1,51 @@
+name: CurseForge Upload
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Mod version (must match a built specterrealm-{version}.jar)
+        required: true
+        type: string
+
+permissions: {}
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+
+      - uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.8'
+
+      - name: Build
+        run: gradle build -Pmod_version=${{ inputs.version }}
+
+      - name: Upload to CurseForge
+        env:
+          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+        run: |
+          if [ -z "${CURSEFORGE_API_KEY:-}" ]; then
+            echo "::error::CURSEFORGE_API_KEY secret is required"
+            exit 1
+          fi
+          PROJECT_ID="${{ vars.CURSEFORGE_PROJECT_ID }}"
+          if [ -z "$PROJECT_ID" ]; then
+            PROJECT_ID="1564254"
+          fi
+          JAR=$(ls -1 build/libs/specterrealm-*.jar | grep -v -- '-sources\|-javadoc' | head -1)
+          python3 scripts/curseforge_upload.py \
+            --project-id "$PROJECT_ID" \
+            --file "$JAR" \
+            --version "${{ inputs.version }}" \
+            --changelog "SpecterRealm Core ${{ inputs.version }}" \
+            --project-type mod \
+            --minecraft-version 1.21.1 \
+            --loaders NeoForge
