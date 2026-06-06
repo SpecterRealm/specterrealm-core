@@ -1,0 +1,60 @@
+name: CurseForge Upload
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Mod version (must match a built specterrealm-{version}.jar)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (CurseForge SM)
+        if: ${{ secrets.AWS_CURSEFORGE_UPLOAD_ROLE_ARN != '' }}
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_CURSEFORGE_UPLOAD_ROLE_ARN }}
+          aws-region: us-west-2
+
+      - name: Load CurseForge API key
+        id: cf_key
+        env:
+          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+        run: bash scripts/ci_load_curseforge_api_key.sh --required
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+
+      - uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.8'
+
+      - name: Build
+        run: gradle build -Pmod_version=${{ inputs.version }}
+
+      - name: Upload to CurseForge
+        run: |
+          PROJECT_ID="${{ vars.CURSEFORGE_PROJECT_ID }}"
+          if [ -z "$PROJECT_ID" ]; then
+            PROJECT_ID="1564254"
+          fi
+          JAR=$(ls -1 build/libs/specterrealm-*.jar | grep -v -- '-sources\|-javadoc' | head -1)
+          python3 scripts/curseforge_upload.py \
+            --project-id "$PROJECT_ID" \
+            --file "$JAR" \
+            --version "${{ inputs.version }}" \
+            --changelog "SpecterRealm Core ${{ inputs.version }}" \
+            --project-type mod \
+            --minecraft-version 1.21.1 \
+            --loaders NeoForge

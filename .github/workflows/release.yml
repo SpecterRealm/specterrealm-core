@@ -7,12 +7,34 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (CurseForge SM)
+        if: ${{ secrets.AWS_CURSEFORGE_UPLOAD_ROLE_ARN != '' }}
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_CURSEFORGE_UPLOAD_ROLE_ARN }}
+          aws-region: us-west-2
+
+      - name: Load CurseForge API key
+        id: cf_key
+        env:
+          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+        run: bash scripts/ci_load_curseforge_api_key.sh
+
+      - name: Parse version from tag
+        id: version
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          VERSION="${TAG#v}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
 
       - uses: actions/setup-java@v4
         with:
@@ -24,12 +46,36 @@ jobs:
           gradle-version: '8.8'
 
       - name: Build
-        run: gradle build -Pmod_version=${GITHUB_REF_NAME#v}
+        run: gradle build -Pmod_version=${{ steps.version.outputs.version }}
+
+      - name: Locate release JAR
+        id: jar
+        run: |
+          JAR=$(ls -1 build/libs/specterrealm-*.jar | grep -v -- '-sources\|-javadoc' | head -1)
+          test -n "$JAR"
+          echo "path=$JAR" >> "$GITHUB_OUTPUT"
+          echo "Built: $JAR"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: "SpecterRealm Core ${{ github.ref_name }}"
-          files: build/libs/specterrealm-*.jar
+          name: "SpecterRealm Core ${{ steps.version.outputs.tag }}"
+          files: ${{ steps.jar.outputs.path }}
           generate_release_notes: true
           fail_on_unmatched_files: true
+
+      - name: Upload to CurseForge
+        if: steps.cf_key.outputs.configured == 'true'
+        run: |
+          PROJECT_ID="${{ vars.CURSEFORGE_PROJECT_ID }}"
+          if [ -z "$PROJECT_ID" ]; then
+            PROJECT_ID="1564254"
+          fi
+          python3 scripts/curseforge_upload.py \
+            --project-id "$PROJECT_ID" \
+            --file "${{ steps.jar.outputs.path }}" \
+            --version "${{ steps.version.outputs.version }}" \
+            --changelog "SpecterRealm Core ${{ steps.version.outputs.version }}" \
+            --project-type mod \
+            --minecraft-version 1.21.1 \
+            --loaders NeoForge
