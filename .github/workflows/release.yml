@@ -7,12 +7,26 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (CurseForge SM)
+        if: ${{ secrets.AWS_CURSEFORGE_UPLOAD_ROLE_ARN != '' }}
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_CURSEFORGE_UPLOAD_ROLE_ARN }}
+          aws-region: us-west-2
+
+      - name: Load CurseForge API key
+        id: cf_key
+        env:
+          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+        run: bash scripts/ci_load_curseforge_api_key.sh
 
       - name: Parse version from tag
         id: version
@@ -51,13 +65,8 @@ jobs:
           fail_on_unmatched_files: true
 
       - name: Upload to CurseForge
-        env:
-          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+        if: steps.cf_key.outputs.configured == 'true'
         run: |
-          if [ -z "${CURSEFORGE_API_KEY:-}" ]; then
-            echo "CURSEFORGE_API_KEY not set — skipping CurseForge upload"
-            exit 0
-          fi
           PROJECT_ID="${{ vars.CURSEFORGE_PROJECT_ID }}"
           if [ -z "$PROJECT_ID" ]; then
             PROJECT_ID="1564254"

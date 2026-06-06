@@ -16,7 +16,7 @@ Release version from tag: `gradle build -Pmod_version=0.0.2`
 ## Release + CurseForge upload
 
 1. Tag `v*` on `main` → GitHub Release + optional CurseForge upload
-2. Requires repo secret `CURSEFORGE_API_KEY` and variable `CURSEFORGE_PROJECT_ID` = `1564254`
+2. API key in AWS SM `personal/curseforge-api-key`; CI reads via OIDC (`AWS_CURSEFORGE_UPLOAD_ROLE_ARN` from platform-bootstrap Terraform). Variable `CURSEFORGE_PROJECT_ID` = `1564254`.
 
 Manual upload without tag: **Actions → CurseForge Upload → Run workflow**
 
