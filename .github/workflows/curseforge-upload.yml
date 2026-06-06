@@ -18,8 +18,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Detect CurseForge OIDC role
+        id: cf_aws
+        env:
+          AWS_CURSEFORGE_UPLOAD_ROLE_ARN: ${{ secrets.AWS_CURSEFORGE_UPLOAD_ROLE_ARN }}
+        run: |
+          if [ -n "$AWS_CURSEFORGE_UPLOAD_ROLE_ARN" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Configure AWS credentials (CurseForge SM)
-        if: ${{ secrets.AWS_CURSEFORGE_UPLOAD_ROLE_ARN != '' }}
+        if: steps.cf_aws.outputs.enabled == 'true'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_CURSEFORGE_UPLOAD_ROLE_ARN }}
