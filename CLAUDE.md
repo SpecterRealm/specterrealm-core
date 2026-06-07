@@ -190,15 +190,47 @@ Recipes should use these tags as ingredients (e.g. `#c:ingots/iron`) so any mod'
 
 Always re-run after modifying `SpecterPart`, `SpecterMaterial`, or `MaterialSets`.
 
-## Open Linear Tickets (as of session end 2026-06-04)
+## Open Linear Tickets (as of session end 2026-06-07)
 
+### Active / High priority
 | ID | Title | Priority |
 |----|-------|----------|
 | SR-810 | Verify CI passes on feature branch | Urgent |
-| SR-805 | Research: Scan CP Verdant for materials and crafting components | High |
 | SR-808 | Add crafting recipes for vanilla-material parts | High |
 | SR-811 | Open PR: configurable crafting parts system v0.1 | High |
-| SR-796–804 | Textures: [each category] (Vanilla Materials) | Medium |
+| SR-817 | Add tiered chemically-infused alloy blank parts (alloy_blank_basic/advanced/elite) | High |
+
+### Textures (vanilla materials — blocked on design system setup, SR-796–804)
+| ID | Title | Priority |
+|----|-------|----------|
+| SR-796 | Textures: Mechanical parts (vanilla materials) | Medium |
+| SR-797 | Textures: Cutting/Grinding parts (vanilla materials) | Medium |
+| SR-798 | Textures: Sheet/Panel parts (vanilla materials) | Medium |
+| SR-799 | Textures: Containers parts (vanilla materials) | Medium |
+| SR-800 | Textures: Tubes/Hoses parts (vanilla materials) | Medium |
+| SR-801 | Textures: Electrical parts (vanilla materials) | Medium |
+| SR-802 | Textures: Computing parts (vanilla materials) | Medium |
+| SR-803 | Textures: Structural parts (vanilla materials) | Medium |
+| SR-804 | Textures: Machine Intermediates parts (vanilla materials) | Medium |
+
+### New materials from CP Verdant scan (SR-805 — Done)
+| ID | Title | Priority |
+|----|-------|----------|
+| SR-813 | Add Mekanism materials (uranium, fluorite, refined_obsidian, refined_glowstone, hdpe) | Medium |
+| SR-814 | Add AE2 materials (certus_quartz, fluix_crystal, silicon) | Medium |
+| SR-815 | Add Silent Gear materials (azure_silver, crimson_iron, blaze_gold, bort, crimson_steel, azure_electrum, tyrian_steel) | Medium |
+| SR-816 | Add remaining CP Verdant materials (andesite_alloy, azurium, yellorium, cyanite) | Medium |
+
+### New part types from CP Verdant scan
+| ID | Title | Priority |
+|----|-------|----------|
+| SR-818 | Add kinetic machine casing part types (andesite_casing, brass_casing) | Medium |
+| SR-819 | Add computing unit part types (computer_normal, computer_advanced) | Medium |
+| SR-820 | Add substrate wafer part type for AE2 processor chain | Medium |
+
+### Other backlog
+| ID | Title | Priority |
+|----|-------|----------|
 | SR-807 | Design & implement Field Manual book skin system | Medium |
 | SR-809 | Add JEI recipe viewer plugin | Medium |
 
