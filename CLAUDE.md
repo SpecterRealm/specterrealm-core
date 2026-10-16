@@ -70,30 +70,14 @@ python3 scripts/generate_assets.py  # Regenerate all models, lang, and tags
 
 JAR output: `build/libs/specterrealm-<version>.jar`
 
-## Config System
+## Design (Iris)
 
-`common.toml` is generated at `[minecraft]/config/specterrealm-common.toml`.
+The mod's design lives in the Iris SpecDoc **`specterrealm-core`** (product `cp`): config gating, current items, the 18 materials, SpecterPart naming rules, `c:` convention tags, the Field Manual, and planned work. Read it with the Iris MCP tools (`iris_specdocs_spec`, then `iris_specdocs_section`) and edit it there. The last copy kept in this file is `git show e4154ce:CLAUDE.md`.
 
-```toml
-[materials]
-  iron = true          # Disabling removes ALL iron parts across all categories
-  copper = true
-  # ... 18 materials total
+Two rules agents need while coding:
 
-[categories]
-  mechanical = true    # Disabling removes all gears, rods, springs, etc.
-  computing = true     # Disable for magic-only packs
-  # ... 10 categories total
-
-[book]
-  skin = "default"     # Planned: default | dark | worn | blueprint (SR-807)
-```
-
-Items are always registered (registry is frozen before config loads). Config gates:
-- Creative tab visibility (`ItemInit.SPECTERREALM_TAB` filters at display time)
-- EMI item list (`SpecterEmiPlugin` hides disabled items)
-- JEI item list (pending SR-809)
-- Recipe conditions (pending SR-808)
+- `materialPrefix = true` → item ID `{material.id}_{part.id}` (e.g. `iron_spur_gear`); `false` → `{part.id}`, gated on the material config, or on the category config alone when the part has no materials.
+- Items are always registered (the registry freezes before config loads); config only hides them (creative tab, EMI, later JEI and recipe conditions).
 
 ## Adding a New Part
 
@@ -111,70 +95,6 @@ Items are always registered (registry is frozen before config loads). Config gat
 5. Add texture PNGs for all new `{material}_{part}` combinations
 6. Add `data/c/tags/item/ingots/{material}.json` if the material isn't provided by another mod
 
-## Current Items (415 total)
-
-### Icon Items (14)
-Quest icons (9) and chapter icons (5) — `stacksTo(1)`, `fireResistant()`, used by Patchouli/FTB Quests.
-All in tag `#specterrealm:quest_icon`.
-
-### Base Material Ingots (5)
-`silver_ingot`, `bronze_ingot`, `aluminum_ingot`, `tin_ingot`, `lead_ingot` — SpecterRealm-native ingots for packs without a source mod. Tagged under `c:ingots/{material}`. Gated by `[categories] base_materials` and the respective material toggle.
-
-### Crafting Parts (410)
-Registered via `SpecterPart` enum loop. All in tag `#specterrealm:crafting_parts`.
-
-| Category | Parts | Searchable tag |
-|----------|-------|----------------|
-| Mechanical | spur/bevel/worm/ring gear, rack, rod, screw, bolt, nut, spring, ring, bearing, ball bearing, bushing, coupling, valve, gasket, piston head, nozzle, handle | `#specterrealm:mechanical_parts` |
-| Cutting/Grinding | cutting blade, saw blade, grinding wheel, drill bit | `#specterrealm:cutting_grinding_parts` |
-| Sheet/Panel | foil, plate, large plate, curved plate, panel, heat sink | `#specterrealm:sheet_panel_parts` |
-| Containers | canister, cylinder, tank fitting | `#specterrealm:containers_parts` |
-| Tubes/Hoses | rubber hose, metal tube, hose clamp | `#specterrealm:tubes_hoses_parts` |
-| Electrical | fine/heavy wire, coil, em coil, transformer core, capacitor, battery cell ×2, LED, light bulb, switch | `#specterrealm:electrical_parts` |
-| Computing | resin board, circuit ×3, processor, memory module, logic gate, GPU ×2, signal antenna | `#specterrealm:computing_parts` |
-| Structural | frame, casing, bracket, duct, filter element | `#specterrealm:structural_parts` |
-| Machine Intermediates | gear blank, plate blank, wire draw die, stamping die, crucible tray, mold | `#specterrealm:machine_intermediates_parts` |
-
-## Materials (18)
-
-| ID | Type | Source | Notes |
-|----|------|--------|-------|
-| iron, copper, gold, diamond, netherite | vanilla metal | Minecraft | Always available |
-| wood, stone, obsidian | vanilla primitive | Minecraft | For early-tier parts |
-| tin, lead, osmium, steel | tech metals | Mekanism | `osmium` defaults to false |
-| brass, zinc | alloys | Create | `zinc` defaults to false |
-| silver, bronze, aluminum | common alloys | SpecterRealm ingots | No source mod required |
-| rubber | soft material | Pack mod | For seals, hoses, handles |
-
-## SpecterPart Naming Rules
-
-- `materialPrefix = true` → item ID = `{material.id}_{part.id}` (e.g. `iron_spur_gear`)
-- `materialPrefix = false` + non-empty materials → item ID = `{part.id}` (e.g. `rubber_hose`), gated on material config
-- `materialPrefix = false` + empty materials → item ID = `{part.id}` (e.g. `led`), gated on category config only
-
-## Convention Tags (c: namespace)
-
-Items are tagged under `data/c/tags/item/{category}/{material}.json` for cross-mod recipe interop.
-
-| Part type | c: tag |
-|-----------|--------|
-| Gears | `c:gears/{material}` |
-| Rods | `c:rods/{material}` |
-| Plates | `c:plates/{material}` |
-| Foil | `c:foils/{material}` |
-| Wire | `c:wires/{material}` |
-| Base ingots | `c:ingots/{material}` |
-
-Recipes should use these tags as ingredients (e.g. `#c:ingots/iron`) so any mod's version of the material works.
-
-## Field Manual (Patchouli Book)
-
-- Config at `data/specterrealm/patchouli_books/field_manual/book.json`
-- Dark green theme: `cover_color: #2C4A2E`
-- Custom GUI textures: `gui/book_texture.png`, `gui/crafting_texture.png`, `gui/filler_texture.png`
-- Multiple skin presets planned (SR-807): default, dark, worn, blueprint
-- No chapters/entries defined yet
-
 ## Asset Generator
 
 `scripts/generate_assets.py` — run from repo root to regenerate all data files.
@@ -189,50 +109,6 @@ Recipes should use these tags as ingredients (e.g. `#c:ingots/iron`) so any mod'
 **Does NOT generate:** textures (artwork), recipes (design decision needed per part).
 
 Always re-run after modifying `SpecterPart`, `SpecterMaterial`, or `MaterialSets`.
-
-## Open Linear Tickets (as of session end 2026-06-07)
-
-### Active / High priority
-| ID | Title | Priority |
-|----|-------|----------|
-| SR-810 | Verify CI passes on feature branch | Urgent |
-| SR-808 | Add crafting recipes for vanilla-material parts | High |
-| SR-811 | Open PR: configurable crafting parts system v0.1 | High |
-| SR-817 | Add tiered chemically-infused alloy blank parts (alloy_blank_basic/advanced/elite) | High |
-
-### Textures (vanilla materials — blocked on design system setup, SR-796–804)
-| ID | Title | Priority |
-|----|-------|----------|
-| SR-796 | Textures: Mechanical parts (vanilla materials) | Medium |
-| SR-797 | Textures: Cutting/Grinding parts (vanilla materials) | Medium |
-| SR-798 | Textures: Sheet/Panel parts (vanilla materials) | Medium |
-| SR-799 | Textures: Containers parts (vanilla materials) | Medium |
-| SR-800 | Textures: Tubes/Hoses parts (vanilla materials) | Medium |
-| SR-801 | Textures: Electrical parts (vanilla materials) | Medium |
-| SR-802 | Textures: Computing parts (vanilla materials) | Medium |
-| SR-803 | Textures: Structural parts (vanilla materials) | Medium |
-| SR-804 | Textures: Machine Intermediates parts (vanilla materials) | Medium |
-
-### New materials from CP Verdant scan (SR-805 — Done)
-| ID | Title | Priority |
-|----|-------|----------|
-| SR-813 | Add Mekanism materials (uranium, fluorite, refined_obsidian, refined_glowstone, hdpe) | Medium |
-| SR-814 | Add AE2 materials (certus_quartz, fluix_crystal, silicon) | Medium |
-| SR-815 | Add Silent Gear materials (azure_silver, crimson_iron, blaze_gold, bort, crimson_steel, azure_electrum, tyrian_steel) | Medium |
-| SR-816 | Add remaining CP Verdant materials (andesite_alloy, azurium, yellorium, cyanite) | Medium |
-
-### New part types from CP Verdant scan
-| ID | Title | Priority |
-|----|-------|----------|
-| SR-818 | Add kinetic machine casing part types (andesite_casing, brass_casing) | Medium |
-| SR-819 | Add computing unit part types (computer_normal, computer_advanced) | Medium |
-| SR-820 | Add substrate wafer part type for AE2 processor chain | Medium |
-
-### Other backlog
-| ID | Title | Priority |
-|----|-------|----------|
-| SR-807 | Design & implement Field Manual book skin system | Medium |
-| SR-809 | Add JEI recipe viewer plugin | Medium |
 
 ## CI/CD
 
