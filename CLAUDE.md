@@ -114,4 +114,6 @@ Always re-run after modifying `SpecterPart`, `SpecterMaterial`, or `MaterialSets
 
 - `.github/workflows/build.yml` — builds on every PR (cache-read-only)
 - `.github/workflows/release.yml` — builds and creates GitHub release on `v*` tags
+- `.github/workflows/curseforge-upload.yml` — manual CurseForge upload (`version`, optional `dry_run`)
+- All jobs stay on GitHub-hosted runners: the repo is public, so the homelab runner must not serve it. The CurseForge key comes from the `CURSEFORGE_API_KEY` Actions secret (platform-bootstrap writes it from Vault `homelab/curseforge/api-key`, field `token`); there is no cloud role.
 - Java: Temurin 21

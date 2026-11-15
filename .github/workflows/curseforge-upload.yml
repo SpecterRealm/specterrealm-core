@@ -7,34 +7,24 @@ on:
         description: Mod version (must match a built specterrealm-{version}.jar)
         required: true
         type: string
+      dry_run:
+        description: Dry run — load the key, build and resolve CF game versions, but do not upload
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
-  id-token: write
 
 jobs:
   upload:
+    # GitHub-hosted on purpose: this repo is public, and the homelab runner must never serve a public
+    # repo (fork PR code would run on the LAN; homelab-infra docs/runbooks/actions-runner-routing.md).
+    # Vault is LAN-only, so the key comes from the CURSEFORGE_API_KEY Actions secret, which
+    # platform-bootstrap writes from Vault homelab/curseforge/api-key (field token).
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Detect CurseForge OIDC role
-        id: cf_aws
-        env:
-          AWS_CURSEFORGE_UPLOAD_ROLE_ARN: ${{ secrets.AWS_CURSEFORGE_UPLOAD_ROLE_ARN }}
-        run: |
-          if [ -n "$AWS_CURSEFORGE_UPLOAD_ROLE_ARN" ]; then
-            echo "enabled=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "enabled=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Configure AWS credentials (CurseForge SM)
-        if: steps.cf_aws.outputs.enabled == 'true'
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_CURSEFORGE_UPLOAD_ROLE_ARN }}
-          aws-region: us-west-2
 
       - name: Load CurseForge API key
         id: cf_key
@@ -54,7 +44,7 @@ jobs:
       - name: Build
         run: gradle build -Pmod_version=${{ inputs.version }}
 
-      - name: Upload to CurseForge
+      - name: Upload to CurseForge${{ inputs.dry_run && ' (dry run)' || '' }}
         run: |
           PROJECT_ID="${{ vars.CURSEFORGE_PROJECT_ID }}"
           if [ -z "$PROJECT_ID" ]; then
@@ -68,4 +58,5 @@ jobs:
             --changelog "SpecterRealm Core ${{ inputs.version }}" \
             --project-type mod \
             --minecraft-version 1.21.1 \
-            --loaders NeoForge
+            --loaders NeoForge \
+            ${{ inputs.dry_run && '--dry-run' || '' }}
